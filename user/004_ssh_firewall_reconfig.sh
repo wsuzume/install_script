@@ -170,6 +170,13 @@ case ${ANSWER3} in
     break
     ;;
   y)
+    echo "Changing firewall setting for HTTP ... "
+    firewall-cmd --add-service=http --zone=public --permanent
+    echo "[done]"
+    echo "Changing firewall setting for HTTPS ... "
+    firewall-cmd --add-service=https --zone=public --permanent
+    echo "[done]"
+
     echo "Changing firewall setting for SSH new port number ... "
     if [ ${#PORT_NUMBER} -eq 0 ]; then
       echo "SSH port number is not defined."
@@ -195,6 +202,7 @@ case ${ANSWER3} in
     fi
 
     if [ ${EXEC_CHANGE} -eq 1 ]; then
+      # SSH setting
       firewall-cmd --permanent --remove-service=ssh
       cp ${FW_CONFIG} ${FW_CONFIG_BACKUP}
       #cat ${FW_CONFIG}

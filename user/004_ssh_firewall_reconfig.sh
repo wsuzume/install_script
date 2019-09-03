@@ -155,11 +155,11 @@ case ${ANSWER_FW_CONFIG} in
   y)
     echo -n "Changing firewall setting for HTTP ... "
     firewall-cmd --add-service=http --zone=public --permanent
-    firewall-cmd --add-port=80/tcp --zone=public --permanent
+    #firewall-cmd --add-port=80/tcp --zone=public --permanent
     echo "[done]"
     echo -n "Changing firewall setting for HTTPS ... "
     firewall-cmd --add-service=https --zone=public --permanent
-    firewall-cmd --add-port=443/tcp --zone=public --permanent
+    #firewall-cmd --add-port=443/tcp --zone=public --permanent
     echo "[done]"
 
     if [ ${SSH_PORT_USE_DEFAULT} -ne 1 ]; then
@@ -177,7 +177,7 @@ case ${ANSWER_FW_CONFIG} in
       firewall-cmd --permanent --remove-service=ssh
       sed -i '/port protocol/c \ \ <port protocol="tcp" port="'${SSH_PORT_NUMBER}'"/>' ${FW_SSH_CONFIG_ANOTHER_PORT}
       firewall-cmd --permanent --add-service=ssh-${SSH_PORT_NUMBER}
-      firewall-cmd --add-port=${SSH_PORT_NUMBER}/tcp --zone=public --permanent
+      #firewall-cmd --add-port=${SSH_PORT_NUMBER}/tcp --zone=public --permanent
       echo "[done]"
       echo "Changing SELinux setting ... "
       set -x

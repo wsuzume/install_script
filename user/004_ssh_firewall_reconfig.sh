@@ -132,10 +132,11 @@ echo
 
 firewall-cmd --list-all
 
-if [ ${SSH_PORT_USE_DEFAULT} -eq 1 ];
-  echo -n "Do you want to change firewall settings? [y/n] "
+#if [ ${SSH_PORT_USE_DEFAULT} -eq 1 ];
+  echo -n "Do you want to change firewall settings?"
   echo -n "( If you changed the SSH port number, you MUST choose 'y' ) [y/n] "
-ANSWER_FW_CONFIG=`read_and_set`
+  ANSWER_FW_CONFIG=`read_and_set`
+#fi
 
 case ${ANSWER_FW_CONFIG} in
   n)

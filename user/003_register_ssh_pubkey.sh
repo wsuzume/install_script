@@ -1,12 +1,14 @@
 #!/bin/sh
 
+source ./config.sh
+
 echo "* Register your client PC's SSH public key to this server"
 
 echo "Before you run this script, check if you are NOT su."
 echo "This script will be failed if you are su."
 echo -n "Are you ready? [y/n] "
 
-read ANSWER1
+ANSWER1=`read_and_set`
 
 case ${ANSWER1} in
   y)
@@ -18,15 +20,17 @@ case ${ANSWER1} in
 esac
 
 echo
+mkdir ~/.ssh
+echo "Directory ~/.ssh was created."
 echo "Copy your client PC's public key to this server."
-echo "Use below command (especially, the filename is important because"
+echo "Use below command (especially, the target filename is important because"
 echo "the settings after copying will be executed automatically)"
 echo
 echo "$ scp pubkey username@address:~/.ssh/temp_client_key"
 echo
 echo -n "Is copying completed? [y/n] "
 
-read ANSWER2
+ANSWER2=`read_and_set`
 
 echo
 
@@ -37,21 +41,15 @@ case ${ANSWER2} in
     break
     ;;
   y)
-    if [ ! -f "${HOME}/.ssh/temp_client_key" ]; then
+    if [ ! -f ${SSH_TEMP_CLIENT_KEY} ]; then
       echo "public key not found."
       exit
     fi
-    cat ${HOME}/.ssh/temp_client_key >> ${HOME}/.ssh/authorized_keys
-    chmod 600 ${HOME}/.ssh/authorized_keys
-    rm ${HOME}/.ssh/temp_client_key
+    cat ${SSH_TEMP_CLIENT_KEY} >> ${SSH_AUTHORIZED_KEYS}
+    chmod 600 ${SSH_AUTHORIZED_KEYS}
+    rm ${SSH_TEMP_CLIENT_KEY}
 
     echo "SSH public key setting done."
     break
     ;;
-  *)
-    echo "Cannot understand \"${ANSWER}\"."
-    break
-    ;;
 esac
-
-

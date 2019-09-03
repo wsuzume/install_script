@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source ./config.sh
+
 echo "This script file must be executed after su command."
 echo -n "Are you ready? [y/n] "
 ANSWER1=`read_and_set`

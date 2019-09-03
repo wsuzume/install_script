@@ -24,8 +24,8 @@ useradd -m -d /home/users/${USERNAME} -G wheel ${USERNAME}
 passwd ${USERNAME}
 grep wheel /etc/group
 
-INSTALL_SCRIPT=/home/users/${USERNAME}/install_script
+#INSTALL_SCRIPT=/home/users/${USERNAME}/install_script
 
-cp -r /root/install_script ${INSTALL_SCRIPT}
-chown -R ${USERNAME} ${INSTALL_SCRIPT}
-echo "Install script was copied to ${INSTALL_SCRIPT}"
+#cp -r /root/install_script ${INSTALL_SCRIPT}
+#chown -R ${USERNAME} ${INSTALL_SCRIPT}
+#echo "Install script was copied to ${INSTALL_SCRIPT}"

@@ -40,7 +40,7 @@ fi
 
 case ${ANSWER_SSH_CONFIG} in
   y)
-    if [ ${RESTORE_SSH_CONFIG} ]; then
+    if [ ${RESTORE_SSH_CONFIG} -eq 1 ]; then
       rm ${SSH_CONFIG}
       cp -i ${SSH_CONFIG_BACKUP} ${SSH_CONFIG}
     else
@@ -132,7 +132,7 @@ echo
 
 firewall-cmd --list-all
 
-if [ ${SSH_PORT_USER_DEFAULT} ];
+if [ ${SSH_PORT_USE_DEFAULT} -eq 1 ];
   echo -n "Do you want to change firewall settings? [y/n] "
   echo -n "( If you changed the SSH port number, you MUST choose 'y' ) [y/n] "
 ANSWER_FW_CONFIG=`read_and_set`
@@ -159,15 +159,15 @@ case ${ANSWER_FW_CONFIG} in
     firewall-cmd --add-service=https --zone=public --permanent
     echo "[done]"
 
-    if [ ! ${SSH_PORT_USE_DEFAULT} ];
-      if [ ${RESTORE_FW_CONFIG} ]; then
+    if [ ${SSH_PORT_USE_DEFAULT} -ne 1 ]; then
+      if [ ${RESTORE_FW_CONFIG} -eq 1 ]; then
         rm ${FW_SSH_CONFIG}
         cp -i ${FW_SSH_CONFIG_BACKUP} ${FW_SSH_CONFIG}
       else
         cp -i ${FW_SSH_CONFIG} ${FW_SSH_CONFIG_BACKUP}
       fi
 
-      FW_SSH_CONFIG_ANOTHER_PORT="/etc/firewalld/services/ssh-${PORT_NUMBER}.xml"
+      FW_SSH_CONFIG_ANOTHER_PORT="/etc/firewalld/services/ssh-${SSH_PORT_NUMBER}.xml"
       cp -i ${FW_SSH_CONFIG} ${FW_SSH_CONFIG_ANOTHER_PORT}
 
       echo -n "Changing firewall setting for SSH new port number ... "

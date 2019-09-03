@@ -155,9 +155,11 @@ case ${ANSWER_FW_CONFIG} in
   y)
     echo -n "Changing firewall setting for HTTP ... "
     firewall-cmd --add-service=http --zone=public --permanent
+    firewall-cmd --add-port=80/tcp --zone=public --permanent
     echo "[done]"
     echo -n "Changing firewall setting for HTTPS ... "
     firewall-cmd --add-service=https --zone=public --permanent
+    firewall-cmd --add-port=443/tcp --zone=public --permanent
     echo "[done]"
 
     if [ ${SSH_PORT_USE_DEFAULT} -ne 1 ]; then
